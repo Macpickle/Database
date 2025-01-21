@@ -1,5 +1,6 @@
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import RequiredAuth from './utils/requiredAuth';
 
@@ -25,7 +26,7 @@ function App() {
           </Route>
               <Route element={<RequiredAuth callbackURL = {'/'}/>}>
               <Route path="/login" element={<Login />} />
-              <Route path="/register" element={"prompt create user"} />
+              <Route path="/register" element={<Register />} />
               <Route path="/forgot-password" element={"prompt email reset (node mailer??)"} />
               <Route path="*" element={<h1>404 Not Found</h1>} />
           </Route>
