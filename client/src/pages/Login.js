@@ -27,8 +27,8 @@ function Login() {
         // if valid, home page and set token in local storage
         // else raise errors
         
-        // for now, just check if user is in "database", password checking is not implemented
-        const user = database.find(user => user.username === username);
+        // for now, just check if user is in "database"
+        const user = database.find(user => user.username === username && user.password === password);
         
         // error handling 
         if (!user) {

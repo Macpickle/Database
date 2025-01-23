@@ -7,6 +7,8 @@ import AuthenticationWrapper from "../components/AuthenticationWrapper"
 // hooks
 import { useNavigate } from 'react-router-dom';
 
+import database from '../database/database'; // temporary database
+
 function Register() {
     const navigate = useNavigate(); // create navigate object for redirects    
 
@@ -23,6 +25,14 @@ function Register() {
         // if valid, login page
         // else raise errors
         
+        const user = database.find(user => user.username === username || user.email === email);
+
+        // error handling
+        if (user) {
+            document.querySelector(".error").style.display = "block";
+            return;
+        }
+        
         navigate('/login', {state: {username: username}});
     }
 
@@ -33,8 +43,8 @@ function Register() {
 
     return (
         <AuthenticationWrapper title={"Sign Up"}>
-            <div className="error" style={{ display: 'none' }}>
-                <p>Invalid username or password</p>
+            <div className="error alert alert-danger" style={{display: "none"}}>
+                <p className="mb-0">Username or Email is already in use</p>
             </div>
 
             <div className="mt-3 mb-5">
