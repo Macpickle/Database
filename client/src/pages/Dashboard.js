@@ -1,7 +1,9 @@
+// components
 import Sidenav from '../components/Sidenav';
+
+// hooks
 import { useState } from 'react';
 
-// root component for dashboard interface
 function Dashboard() {
     // stores commands used / recieved from database
     const [commands, setCommands] = useState([]);

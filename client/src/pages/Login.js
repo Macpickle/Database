@@ -1,11 +1,15 @@
 import '../stylesheets/index.css';
 import '../stylesheets/login.css';
 
+// components
+import AuthenticationWrapper from "../components/AuthenticationWrapper"
+
+// hooks
 import { useNavigate, useLocation } from 'react-router-dom';
-import database from '../database/database';
 import { useEffect } from 'react';
 
-// root component for Login
+import database from '../database/database'; // temporary database
+
 function Login() {
     const navigate = useNavigate(); // create navigate object for redirects    
     const location = useLocation(); // object to recieve data from different pages, in this case, from register account page
@@ -15,13 +19,17 @@ function Login() {
         event.preventDefault(); 
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
+        const remember = document.getElementById('remember').checked;
 
-        // make API call to server to verify user (not implemented)
-        console.log(username, password);
+        console.log(username, password, remember);
+        // check if user is in database
+        // (eg. check if username and password are valid)
+        // if valid, home page and set token in local storage
+        // else raise errors
         
-        // for now, just check if user is in "database"
+        // for now, just check if user is in "database", password checking is not implemented
         const user = database.find(user => user.username === username);
-
+        
         // error handling 
         if (!user) {
             document.querySelector(".error").style.display = "block";
@@ -39,6 +47,7 @@ function Login() {
         document.querySelector(".error").style.display = "none";
     }
     
+    // sets username input field to value if redirected from registering
     useEffect(() => {
         if (location.state) {
             document.getElementById("username").value = location.state.username;
@@ -46,9 +55,8 @@ function Login() {
         
     });
 
-
     return (
-        <section className="login-section">
+        <AuthenticationWrapper title={"Login"}>
             {/*TEMP DELETE FOR PROD*/}
             <div className="position-absolute top-0 start-0">
                 <p>
@@ -58,58 +66,47 @@ function Login() {
                 </p>
             </div>
 
-            <div className="container">
-                <div className="row justify-content-center">
-                    <div className="col-12 col-md-6 col-lg-4">
-                        <div className="shadow-lg p-3 mb-5 bg-white rounded">
-                            <div className="text-center">
-                                <img className="mb-3" src="..." alt="LOGO" />
-                                <h3>Welcome</h3>
-                            </div>
-                            <div className="error" style={{ display: 'none' }}>
-                                <p>Invalid username or password</p>
-                            </div>
-                            <div className="mt-5 mb-5">
-                                <p>Dont have an account? <a href="/register">Sign up</a></p>
-                                <form onSubmit={loginUser}>
-                                    <div className="mb-3">
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="username"
-                                            placeholder="Username"
-                                            required
-                                            autoComplete="on"
-                                            onChange={resetError}
-                                        />
-                                    </div>
-
-                                    <div className="mb-3">
-                                        <input
-                                            type="password"
-                                            className="form-control"
-                                            id="password"
-                                            placeholder="Password"
-                                            required
-                                            autoComplete="on"
-                                            onChange={resetError}
-                                        />
-                                    </div>
-                                    
-                                    <div className="mb-3 form-check">
-                                        <input type="checkbox" className="form-check-input" id="rememberMe" />
-                                        <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
-                                    </div>
-
-                                    <button type="submit" className="btn btn-primary w-100">Submit</button>
-                                    <p><a href="/forgot-password" className="float-end">Forgot password?</a></p>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div className="error alert alert-danger" style={{display: "none"}}>
+                <p className="mb-0">Invalid username or password</p>
             </div>
-        </section>
+
+            <div className="mt-3 mb-5">
+                <p>Dont have an account? <a href="/register">Sign up</a></p>
+                <form onSubmit={loginUser}>
+
+                    <div className="mb-3">
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="username"
+                            placeholder="Username"
+                            required
+                            autoComplete="on"
+                            onChange={resetError}
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <input
+                            type="password"
+                            className="form-control"
+                            id="password"
+                            placeholder="Password"
+                            required
+                            autoComplete="on"
+                            onChange={resetError}
+                        />
+                    </div>
+
+                    <div className="mb-3 form-check d-flex align-items-center">
+                        <input type="checkbox" className="form-check-input" id="remember"/>
+                        <p className="p-0 m-0"><label className="form-check-label ms-2 mb-0" htmlFor="remember">Remember me</label></p>
+                    </div>
+
+                    <button type="submit" className="btn btn-primary w-100">Submit</button>
+                    <p><a href="/forgot-password" className="float-end">Forgot password?</a></p>
+                </form>
+            </div>
+        </AuthenticationWrapper>
     );
 }
 

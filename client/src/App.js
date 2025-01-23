@@ -1,6 +1,7 @@
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import EmailRecovery from './pages/EmailRecovery'
 import Dashboard from './pages/Dashboard';
 import RequiredAuth from './utils/requiredAuth';
 
@@ -27,7 +28,7 @@ function App() {
               <Route element={<RequiredAuth callbackURL = {'/'}/>}>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={"prompt email reset (node mailer??)"} />
+              <Route path="/forgot-password" element={<EmailRecovery/>} />
               <Route path="*" element={<h1>404 Not Found</h1>} />
           </Route>
       </Routes>
