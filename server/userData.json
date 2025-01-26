@@ -28,5 +28,70 @@
     "user_pass": "password005",
     "email": "user005@example.com",
     "role": "N/A"
+  },
+  {
+    "user_name": "string",
+    "user_pass": "string",
+    "user_email": "string"
+  },
+  {
+    "user_name": "string",
+    "user_pass": "string",
+    "user_email": "string"
+  },
+  {
+    "user_name": "string",
+    "user_pass": "string",
+    "user_email": "string"
+  },
+  {
+    "user_name": "st1ring",
+    "user_pass": "string",
+    "user_email": "string"
+  },
+  {
+    "user_name": "HAaaLO",
+    "user_pass": "string",
+    "user_email": "string"
+  },
+  {
+    "user_name": "HAaaLO",
+    "user_pass": "string",
+    "user_email": "string"
+  },
+  {
+    "user_name": "HAaaLO",
+    "user_pass": "string",
+    "user_email": "string"
+  },
+  {
+    "user_name": "HAaaLO",
+    "user_pass": "string",
+    "user_email": "string"
+  },
+  {
+    "user_name": "HAaaLO",
+    "user_pass": "string",
+    "user_email": "string"
+  },
+  {
+    "user_name": "HAaaLO",
+    "user_pass": "string",
+    "user_email": "string"
+  },
+  {
+    "user_name": "HAaaLO",
+    "user_pass": "string",
+    "user_email": "string"
+  },
+  {
+    "user_name": "HAaaLO",
+    "user_pass": "string",
+    "user_email": "string"
+  },
+  {
+    "user_name": "HAaaaaaaaLO",
+    "user_pass": "string",
+    "user_email": "string"
   }
 ]

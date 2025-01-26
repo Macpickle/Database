@@ -6,8 +6,9 @@ import os
 print(os.getcwd())  # Shows your current working directory
 
 router = APIRouter()
-path = ".."
-userDatabase = database(path)
+userDatabase = database("userData.json")
+
+
 
 # file contains basic routes for user retrieval, creation and deletion
 # add more routes, and get user data here
@@ -15,7 +16,7 @@ userDatabase = database(path)
 # Create a route to get all users
 @router.get("/users/")
 async def read_users():
-    return {"message": "GET users"}
+    return userDatabase.getData()
 
 # Create a index route
 @router.get("/")
@@ -25,11 +26,31 @@ def index():
 # BELOW PUTS IT ON THE API http://127.0.0.1:8000/items/
 
 # Create a route to create items
-@router.post("/items/")
-async def create_item(item: userItem):
-    items = read_data_from_db()
+@router.post("/users/")
+async def users_register(user: userItem):
+    userNameList = userDatabase.getEntry("user_name")
+    if(user.user_name.lower() in [name.lower() for name in userNameList]):
+        raise InvalidUsername(user.user_name)
+    else:
+        items = userDatabase.getData()
+        items.append(user.model_dump())
+        write_data_to_db(data=items,filename=userDatabase.filename)
+        print(f'Added user {user.user_name}')
+        raise LoginSuccess
+
+@router.post("/users/")
+async def users_login(user: userItem):
+    userDict = userDatabase.getUser() 
+    if(len(userDict) == 0):
+        return InvalidUsername
+    else:
+        if(user.user_pass == userDict['user_pass']):
+            return LoginSuccess
+        
+    return LoginFail
+
+
     
-    items.append(item.model_dump())
-    write_data_to_db(items)
-    return item
+
+
 

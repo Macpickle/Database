@@ -9,6 +9,16 @@ def read_data_from_db(filename):
         data = []
     return data
 
+
+def write_data_to_db(data,filename):
+    try:
+        with open(filename, "w") as file:
+            json.dump(data, file, indent=2)
+    except FileNotFoundError:
+        print("Error")
+    return 
+
+
 class database:
     def __init__(self,filename):
         self.filename = filename
@@ -18,6 +28,7 @@ class database:
     # Function returns a list of dictionary entries
     def getData(self):
         return self.data
+    
     
     def getDataSize(self):
         return self.dataSize
@@ -30,10 +41,34 @@ class database:
             list.append(i[entry_name])
         return list
     
+    def getUser(self,user):
+        if(self.dataSize == 0):
+            return {}
+        for i in self.data:
+            if(user == i['user_name']):
+                return i
  
 
 
 
+# ERROR CLASSES
+from models.user.userModel import *
 
+class InvalidUsername(Exception):
+    def __init__(self,user_name):
+        self.user_name = user_name
+        self.message = f'Username {user_name} is not valid (Duplicate)'
+        super().__init__(self.message)
+        
 
+class LoginSuccess(Exception):
+    def __init__(self, user: userItem):
+        self.user_name = user.user_name
+        self.message = f'Success login {self.user_name}'
+        super().__init__(self.message)
 
+class LoginFail(Exception):
+    def __init__(self, user: userItem):
+        self.user_name = user.user_name
+        self.message = f'Failed login {self.user_name}'
+        super().__init__(self.message)
