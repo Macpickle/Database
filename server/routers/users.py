@@ -30,13 +30,13 @@ def index():
 async def users_register(user: userItem):
     userNameList = userDatabase.getEntry("user_name")
     if(user.user_name.lower() in [name.lower() for name in userNameList]):
-        raise InvalidUsername(user.user_name)
+        return InvalidUsername(user.user_name)
     else:
         items = userDatabase.getData()
         items.append(user.model_dump())
         write_data_to_db(data=items,filename=userDatabase.filename)
         print(f'Added user {user.user_name}')
-        raise LoginSuccess
+        return LoginSuccess
 
 @router.post("/users/")
 async def users_login(user: userItem):
